@@ -1,3 +1,6 @@
+// ignore_for_file: depend_on_referenced_packages
+
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:malahi_app/core/injection/auth_injection.dart';
@@ -6,7 +9,6 @@ import 'package:malahi_app/core/injection/pack_injection.dart';
 import 'package:malahi_app/core/injection/ticket_injection.dart';
 import 'package:malahi_app/features/splash/presentation/controllers/splash_content_controller.dart';
 import 'package:malahi_app/features/splash/presentation/pages/splash_screen.dart';
-import 'package:malahi_app/features/tabs/presentation/pages/tabs_page.dart';
 import 'package:malahi_app/routes.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -14,8 +16,14 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart'; // Import Provider package
 import 'package:malahi_app/features/tabs/domain/tabs_controller.dart'; // Import your TabsController
 
-void main() {
-  runApp(MyApp());
+void main() async {
+    WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+  runApp(EasyLocalization(child: MyApp(),
+    supportedLocales: [Locale('en'), Locale('ar')],
+    path: "assets/langs",
+    startLocale: Locale('ar'),
+    saveLocale: true,));
 }
 
 class MyApp extends StatelessWidget {
@@ -33,16 +41,21 @@ class MyApp extends StatelessWidget {
           PackInjection().packsCubit,
         ],
         child: MaterialApp(
-          localizationsDelegates: [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          localeResolutionCallback: (locale, supportedLocales) {
-            // Return the Arabic locale by default
-            return const Locale('ar');
-          },
+          localizationsDelegates:context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
+  //         localeResolutionCallback: (locale, supportedLocales) {
+  // if (locale?.languageCode == 'ar') {
+  //   return const Locale('ar');
+  // }
+  // return const Locale('en');
+//},
+          // localeResolutionCallback: (locale, supportedLocales) {
+          //   // Return the Arabic locale by default
+          //   return const Locale('ar');
+          // },
           debugShowCheckedModeBanner: false,
+          
           title: 'ملاهي', // Your app name in Arabic
           theme: ThemeData(
             textTheme: GoogleFonts

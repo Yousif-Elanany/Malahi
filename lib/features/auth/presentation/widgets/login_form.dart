@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:malahi_app/core/constants/app_colors.dart';
 import 'package:malahi_app/core/widgets/background_app.dart';
@@ -22,6 +23,7 @@ class _LoginFormState extends State<LoginForm> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+
   @override
   void dispose() {
     emailController.dispose();
@@ -43,7 +45,8 @@ class _LoginFormState extends State<LoginForm> {
               child: Column(
                 children: [
                   LogoApp(),
-                  HeaderH1(text: 'تسجيل الدخول'),
+                  HeaderH1(text: 'Login'.tr()),
+                  
                   // Subtitle(text: 'لكن يجب أن أشرح لك كيف ولدت كل هذه الفكرة'),
                   if (widget.state is AuthLoading)
                     SizedBox(
@@ -55,14 +58,14 @@ class _LoginFormState extends State<LoginForm> {
 
                   InputPrimary(
                     label: 'البريد الإلكتروني', // Email label
-                    placeholder: 'أدخل بريدك الإلكتروني', // Email placeholder
+                    placeholder: 'Enter Your Email'.tr(), // Email placeholder
                     icon: Icons.email, // Email icon
                     controller: emailController, // Email controller
                   ),
                   const SizedBox(height: 20), // Space between input fields
                   InputPrimary(
                     label: 'كلمة المرور', // Password label
-                    placeholder: 'أدخل كلمة المرور', // Password placeholder
+                    placeholder: 'Enter Your Password'.tr(), // Password placeholder
                     isPassword: true, // Enable password visibility
                     icon: Icons.lock, // Password icon
                     controller: passwordController, // Password controller
@@ -75,14 +78,14 @@ class _LoginFormState extends State<LoginForm> {
                         Navigator.pushNamed(context, '/forgot-password');
                       },
                       child: Text(
-                        'نسيت كلمة المرور',
+                        'ForgetPassword'.tr(),
                         style: TextStyle(color: AppColors.textSecondary),
                       ),
                     ),
                   ),
                   const SizedBox(height: 20),
                   ButtonPrimary(
-                    text: 'تسجيل الدخول',
+                    text: 'Login'.tr() ,
                     onPressed: () {
                       final email = emailController.text;
                       final password = passwordController.text;
@@ -96,19 +99,21 @@ class _LoginFormState extends State<LoginForm> {
                         MainAxisAlignment.center, // Align to the right
                     children: [
                       Text(
-                        'ليس لديك حساب ',
+                        'No Account'.tr(),
                         style: TextStyle(
                           color: AppColors
                               .textPrimary, // Color for the regular text
                           fontSize: 16,
                         ),
                       ),
+                                        const SizedBox(width: 5),
+
                       InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, '/register');
                         }, // Handle tap
                         child: Text(
-                          'انشاء حساب', // Clickable text
+                          'Create Account'.tr(), // Clickable text
                           style: TextStyle(
                             color: AppColors
                                 .secondary, // Change color for clickable text
